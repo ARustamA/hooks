@@ -2,8 +2,8 @@ import { useEffect, useState, useLayoutEffect } from 'react';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 const ThemeSwitcher = () => {
-  const [darkMode, setDarkMode] = useState(false);
   const userTheme = localStorage.getItem('theme');
+  const [darkMode, setDarkMode] = useState(userTheme ? userTheme : false);
   const getSystemTheme = () => {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
       return 'light';
