@@ -1,23 +1,9 @@
-import { useEffect, useState, useLayoutEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 const ThemeSwitcher = () => {
   const userTheme = localStorage.getItem('theme');
-  const [darkMode, setDarkMode] = useState(userTheme ? userTheme : false);
-  const getSystemTheme = () => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-      return 'light';
-    } else {
-      return 'dark';
-    }
-  };
-
-  const systemTheme = getSystemTheme();
-
-  useLayoutEffect(() => {
-    if ((userTheme && userTheme === 'dark') || (!userTheme && systemTheme)) setDarkMode(true);
-    else setDarkMode(false);
-  }, []);
+  const [darkMode, setDarkMode] = useState(userTheme === 'dark' || userTheme === null);
 
   useEffect(() => {
     if (darkMode) {
@@ -41,3 +27,16 @@ const ThemeSwitcher = () => {
 };
 
 export default ThemeSwitcher;
+
+////////////   in HTML ////////////////
+// <script>
+//   const userTheme = localStorage.getItem('theme');
+//   if (userTheme === 'dark') {
+//     document.documentElement.classList.add('dark');
+//   } else {
+//     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+//     if (prefersDark) {
+//       document.documentElement.classList.add('dark');
+//     }
+//   }
+// </script>
