@@ -1,0 +1,18 @@
+
+export const withShortenParagraph = <P extends object>(
+  Component: ComponentType<P>
+) => {
+  return function TextLengthLimit(props: Omit<P & { children?: React.ReactNode; textLength?: number; }, "children" | "textLength"> & { children: React.ReactNode }) {
+    const { children, textLength = 10, ...rest } = props;
+
+    if (textLength === -1) {
+      return <Component {...rest as P}>{children}</Component>;
+    }
+
+    const shortenedText = typeof children === 'string' && children.length > textLength
+      ? children.substring(0, textLength) + '...'
+      : children;
+
+    return <Component {...rest as P}>{shortenedText}</Component>;
+  };
+};
